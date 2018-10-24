@@ -1,3 +1,4 @@
-* Ignore .idea and target folder
+* Ignore .idea, logs and target folder
 .idea
+logs
 target
