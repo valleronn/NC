@@ -7,11 +7,11 @@ package com.nikitin.valeriy;
  *     <li>8 fields of primitive data types</li>
  *     <li>Default constructor and with parameters</li>
  *     <li>Getters and setters of all fields</li>
- *     <li>Method tellAboutHobby()</li>
+ *     <li>Abstract Method tellAboutHobby()</li>
  * </ul>
  * @author Valeriy Nikitin
  */
-public class Hobby {
+public abstract class Hobby {
     private static byte counter;
     private short id;
     private int startMonth;
@@ -35,9 +35,9 @@ public class Hobby {
 
     /**
      * Second constructor that calls default constructor
-     * @param name main.java.com.nikitin.valeriy.Hobby name
-     * @param startMonth main.java.com.nikitin.valeriy.Hobby start month
-     * @param startYear main.java.com.nikitin.valeriy.Hobby start year
+     * @param name Hobby name
+     * @param startMonth mHobby start month
+     * @param startYear Hobby start year
      */
     public Hobby(String name, int startMonth, long startYear) {
         this();
@@ -48,12 +48,12 @@ public class Hobby {
 
     /**
      * Constructor that calls second constructor
-     * @param name main.java.com.nikitin.valeriy.Hobby name
-     * @param startMonth main.java.com.nikitin.valeriy.Hobby start month
-     * @param startYear main.java.com.nikitin.valeriy.Hobby start year
-     * @param popularity main.java.com.nikitin.valeriy.Hobby popularity
+     * @param name Hobby name
+     * @param startMonth Hobby start month
+     * @param startYear Hobby start year
+     * @param popularity Hobby popularity
      * @param expenses amount of money needed for a hobby
-     * @param riskEvaluation evaluates main.java.com.nikitin.valeriy.Hobby risk
+     * @param riskEvaluation evaluates Hobby risk
      */
     public Hobby(String name, int startMonth, long startYear, float popularity,
                  double expenses, char riskEvaluation) {
@@ -69,8 +69,10 @@ public class Hobby {
      * id, name, startMonth, startYear, popularity
      * expenses, riskEvaluation
      */
-    public void tellAboutHobby() {
-        System.out.println(toString());
+    public abstract void tellAboutHobby();
+
+    public short getId() {
+        return id;
     }
 
     public int getStartMonth() {
