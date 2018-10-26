@@ -1,6 +1,4 @@
-package com.nikitin.valeriy.Hobbies;
-
-import com.nikitin.valeriy.Hobby;
+package com.nikitin.valeriy.hobbies;
 
 /**
  * Represents Football hobbies which extends Hobby

@@ -1,7 +1,8 @@
 package com.nikitin.valeriy;
 
-import com.nikitin.valeriy.Hobbies.Fishing;
-import com.nikitin.valeriy.Hobbies.Football;
+import com.nikitin.valeriy.hobbies.Fishing;
+import com.nikitin.valeriy.hobbies.Football;
+import com.nikitin.valeriy.hobbies.Hobby;
 import org.apache.log4j.Logger;
 import org.apache.log4j.LogManager;
 
@@ -23,7 +24,7 @@ public class Test {
 
         Test test = new Test();
 
-        Hobby[] hobby = new Hobby[2];
+        Hobby[] hobbies = new Hobby[2];
 
         // Assigning values for the first hobby
         hobbyName = "Football";
@@ -34,14 +35,14 @@ public class Test {
         riskEvaluation = 'A';
         String type = "Soccer";
         boolean outDoor = true;
-        hobby[0] = new Football(hobbyName, startMonth, startYear, type, outDoor);
+        hobbies[0] = new Football(hobbyName, startMonth, startYear, type, outDoor);
         logger.info("Creating " + hobbyName + " hobby");
-        test.checkMonth(startMonth, hobby[0]);
-        hobby[0].setPopularity(popularity);
-        hobby[0].setExpenses(expenses);
-        hobby[0].setRiskEvaluation(riskEvaluation);
-        hobby[0].setActive(ACTIVE);
-        logger.debug("Is " + hobbyName + " active: " + hobby[0].isActive());
+        test.checkMonth(startMonth, hobbies[0]);
+        hobbies[0].setPopularity(popularity);
+        hobbies[0].setExpenses(expenses);
+        hobbies[0].setRiskEvaluation(riskEvaluation);
+        hobbies[0].setActive(ACTIVE);
+        logger.debug("Is " + hobbyName + " active: " + hobbies[0].isActive());
 
         // Assigning values for the second hobby
         hobbyName = "Fishing";
@@ -51,16 +52,16 @@ public class Test {
         expenses = 545.00d;
         riskEvaluation = 'B';
         type = "Sea fishing";
-        hobby[1] = new Fishing(hobbyName, startMonth, startYear, popularity, expenses,
+        hobbies[1] = new Fishing(hobbyName, startMonth, startYear, popularity, expenses,
                                     riskEvaluation, type);
         logger.info("Creating " + hobbyName + " hobby");
-        test.checkMonth(startMonth, hobby[1]);
-        hobby[1].setActive(ACTIVE);
-        logger.debug("Is " + hobbyName + " active: " + hobby[1].isActive());
+        test.checkMonth(startMonth, hobbies[1]);
+        hobbies[1].setActive(ACTIVE);
+        logger.debug("Is " + hobbyName + " active: " + hobbies[1].isActive());
         //hobby[1].tellAboutHobby();
 
-        for (Hobby hobbies: hobby) {
-            hobbies.tellAboutHobby();
+        for (Hobby hobby: hobbies) {
+            hobby.tellAboutHobby();
         }
 
     }
