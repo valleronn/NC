@@ -1,7 +1,8 @@
+
 package com.nikitin.valeriy.hobbies;
 
 /**
- * Represents Fishing hobbies which extends Hobby
+ * Represents Fishing hobbies which extends Hobby.
  * This class includes:
  * <ul>
  *     <li>fishingType field</li>
@@ -18,25 +19,35 @@ public class Fishing extends Hobby {
         super();
     }
 
-    public Fishing(String name, int startMonth, long startYear, String fishingType) {
+    public Fishing(String name, int startMonth, long startYear,
+                   String fishingType) {
         super(name, startMonth, startYear);
         this.fishingType = fishingType;
     }
 
-    public Fishing(String name, int startMonth, long startYear, float popularity,
-                    double expenses, char riskEvaluation, String fishingTypeType) {
-        super(name, startMonth, startYear, popularity, expenses, riskEvaluation);
+    public Fishing(String name, int startMonth, long startYear,
+                   float popularity, double expenses, char riskEvaluation,
+                   String fishingTypeType) {
+        super(name, startMonth, startYear, popularity, expenses,
+                riskEvaluation);
         this.fishingType = fishingTypeType;
     }
 
     /**
-     * Prints all the information about Fishing hobby
+     * Prints all the information about Fishing hobby.
      */
     @Override
-    public void tellAboutHobby() {
+    public void tellAboutHobby() throws HobbyException {
+        if (getName() == null) {
+            throw new HobbyException("Hobby name can't be null");
+        }
         System.out.printf(toString());
     }
 
+    /**
+     * Overrides toString method to display Fishing hobby object.
+     * @return returns hobby
+     */
     @Override
     public String toString() {
         String hobby = "ID: " + getId()

@@ -1,7 +1,7 @@
 package com.nikitin.valeriy.hobbies;
 
 /**
- * Represents hobbies
+ * Represents hobbies.
  * This class includes:
  * <ul>
  *     <li>8 fields of primitive data types</li>
@@ -20,21 +20,21 @@ public abstract class Hobby {
     private double expenses; //amount of money needed for particular hobby
     private char riskEvaluation; // A - the most risky hobby, C - less risky
     private boolean active;
-    private String name; // not a primitive data type but needed to store name of the hobby
+    private String name;
 
     {
         counter++;
     }
 
     /**
-     * Default constructor that defines only id
+     * Default constructor that defines only id.
      */
     public Hobby() {
         id += counter;
     }
 
     /**
-     * Second constructor that calls default constructor
+     * Second constructor that calls default constructor.
      * @param name Hobby name
      * @param startMonth mHobby start month
      * @param startYear Hobby start year
@@ -47,7 +47,7 @@ public abstract class Hobby {
     }
 
     /**
-     * Constructor that calls second constructor
+     * Constructor that calls second constructor.
      * @param name Hobby name
      * @param startMonth Hobby start month
      * @param startYear Hobby start year
@@ -64,12 +64,13 @@ public abstract class Hobby {
     }
 
     /**
-     * Method to print all information about a main.java.com.nikitin.valeriy.hobbies.Hobby
+     * Method to print all information about a Hobby.
      * such as
      * id, name, startMonth, startYear, popularity
      * expenses, riskEvaluation
+     * @throws HobbyException
      */
-    public abstract void tellAboutHobby();
+    public abstract void tellAboutHobby() throws HobbyException;
 
     public short getId() {
         return id;
@@ -131,6 +132,10 @@ public abstract class Hobby {
         this.name = name;
     }
 
+    /**
+     * Overrides toString method to display Hobby object.
+     * @return returns hobby
+     */
     @Override
     public String toString() {
         String hobby = "ID: " + id

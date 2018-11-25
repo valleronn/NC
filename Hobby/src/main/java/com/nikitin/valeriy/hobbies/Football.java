@@ -1,7 +1,7 @@
 package com.nikitin.valeriy.hobbies;
 
 /**
- * Represents Football hobbies which extends Hobby
+ * Represents Football hobbies which extends Hobby.
  * This class includes:
  * <ul>
  *     <li>2 fields footballType and outDoor</li>
@@ -15,21 +15,32 @@ public class Football extends Hobby {
     private String footballType;
     private boolean outDoor;
 
+    /**
+     * Default constructor that calls Hobby default constructor.
+     */
     public Football() {
         super();
     }
 
-    public Football(String name, int startMonth, long startYear, String footballType, boolean outDoor) {
+    /**
+     * Second constructor that calls Hobby default constructor.
+     * @param name Hobby name
+     * @param startMonth Hobby start month
+     * @param startYear Hobby start year
+     * @param footballType Hobby type
+     */
+    public Football(String name, int startMonth, long startYear,
+                    String footballType) {
         super(name, startMonth, startYear);
         this.footballType = footballType;
-        this.outDoor = outDoor;
     }
 
-    public Football(String name, int startMonth, long startYear, float popularity,
-                    double expenses, char riskEvaluation, String footballType, boolean outDoor) {
-        super(name, startMonth, startYear, popularity, expenses, riskEvaluation);
+    public Football(String name, int startMonth, long startYear,
+                    float popularity, double expenses,
+                    char riskEvaluation, String footballType) {
+        super(name, startMonth, startYear, popularity, expenses,
+                riskEvaluation);
         this.footballType = footballType;
-        this.outDoor = outDoor;
     }
 
     public String getFootballType() {
@@ -49,13 +60,20 @@ public class Football extends Hobby {
     }
 
     /**
-     * Prints all the information about Football hobby
+     * Prints all the information about Football hobby.
      */
     @Override
-    public void tellAboutHobby() {
+    public void tellAboutHobby() throws HobbyException {
+        if (getName() == null) {
+            throw new HobbyException("Hobby name can't be null");
+        }
         System.out.printf(toString());
     }
 
+    /**
+     * Overrides toString method to display Football hobby object.
+     * @return returns hobby
+     */
     @Override
     public String toString() {
         String hobby = "ID: " + getId()

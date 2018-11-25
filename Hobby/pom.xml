@@ -8,7 +8,7 @@
   <artifactId>hobby</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>home-work3-maven</name>
+  <name>home-work-maven</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
@@ -66,5 +66,29 @@
         </plugin>
       </plugins>
     </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.0.0</version>
+        <executions>
+          <execution>
+            <id>validate</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <encoding>UTF-8</encoding>
+          <consoleOutput>true</consoleOutput>
+          <failsOnError>true</failsOnError>
+          <failOnViolation>true</failOnViolation>
+          <violationSeverity>error</violationSeverity>
+          <linkXRef>false</linkXRef>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
 </project>

@@ -3,22 +3,23 @@ package com.nikitin.valeriy;
 import com.nikitin.valeriy.hobbies.Fishing;
 import com.nikitin.valeriy.hobbies.Football;
 import com.nikitin.valeriy.hobbies.Hobby;
+import com.nikitin.valeriy.hobbies.HobbyException;
 import org.apache.log4j.Logger;
 import org.apache.log4j.LogManager;
 
 /**
- * Test class which contains main function
+ * Test class which contains main function.
  * @author Valeriy Nikitin
  */
 public class Test {
-    private final static Logger logger = LogManager.getLogger(Test.class);
+    private static final Logger LOGGER = LogManager.getLogger(Test.class);
     private static String hobbyName;
     private static int startMonth;
     private static long startYear;
     private static float popularity;
     private static double expenses;
     private static char riskEvaluation;
-    private final static boolean ACTIVE = true;
+    private static final boolean ACTIVE = true;
 
     public static void main(String[] args) {
 
@@ -35,14 +36,15 @@ public class Test {
         riskEvaluation = 'A';
         String type = "Soccer";
         boolean outDoor = true;
-        hobbies[0] = new Football(hobbyName, startMonth, startYear, type, outDoor);
-        logger.info("Creating " + hobbyName + " hobby");
+        hobbies[0] = new Football(hobbyName, startMonth,
+                                startYear, type);
+        LOGGER.info("Creating " + hobbyName + " hobby");
         test.checkMonth(startMonth, hobbies[0]);
         hobbies[0].setPopularity(popularity);
         hobbies[0].setExpenses(expenses);
         hobbies[0].setRiskEvaluation(riskEvaluation);
         hobbies[0].setActive(ACTIVE);
-        logger.debug("Is " + hobbyName + " active: " + hobbies[0].isActive());
+        LOGGER.debug("Is " + hobbyName + " active: " + hobbies[0].isActive());
 
         // Assigning values for the second hobby
         hobbyName = "Fishing";
@@ -52,23 +54,31 @@ public class Test {
         expenses = 545.00d;
         riskEvaluation = 'B';
         type = "Sea fishing";
-        hobbies[1] = new Fishing(hobbyName, startMonth, startYear, popularity, expenses,
-                                    riskEvaluation, type);
-        logger.info("Creating " + hobbyName + " hobby");
+        hobbies[1] = new Fishing(hobbyName, startMonth, startYear, popularity,
+                                expenses, riskEvaluation, type);
+        LOGGER.info("Creating " + hobbyName + " hobby");
         test.checkMonth(startMonth, hobbies[1]);
         hobbies[1].setActive(ACTIVE);
-        logger.debug("Is " + hobbyName + " active: " + hobbies[1].isActive());
-        //hobby[1].tellAboutHobby();
+        LOGGER.debug("Is " + hobbyName + " active: " + hobbies[1].isActive());
 
         for (Hobby hobby: hobbies) {
-            hobby.tellAboutHobby();
+            try {
+                hobby.tellAboutHobby();
+            } catch (HobbyException e) {
+                e.printStackTrace();
+            }
         }
 
     }
 
+    /**
+     * Checks if correct month number passed.
+     * @param startMonth Hobby start month
+     * @param hobby actual hobby
+     */
     public void checkMonth(int startMonth, Hobby hobby) {
         if (startMonth <= 0 || startMonth > 12) {
-            logger.error("Wrong month for " + hobby.getName() + " hobby");
+            LOGGER.error("Wrong month for " + hobby.getName() + " hobby");
         }
     }
 }
