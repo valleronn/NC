@@ -1,5 +1,5 @@
 
-package com.nikitin.valeriy.hobbies;
+package com.nikitin.valeriy.hobby.hobbies;
 
 /**
  * Represents Fishing hobbies which extends Hobby.

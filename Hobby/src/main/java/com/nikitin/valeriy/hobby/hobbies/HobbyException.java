@@ -1,4 +1,4 @@
-package com.nikitin.valeriy.hobbies;
+package com.nikitin.valeriy.hobby.hobbies;
 
 /**
  * Represents custom Hobby exception.
