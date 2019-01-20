@@ -5,12 +5,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.text.SimpleDateFormat;
 
+/**
+ * TaskManagerController class
+ */
 public class TaskManagerController {
     @FXML
     private TableView<Task> taskTable;
     @FXML
     private TableColumn<Task, String> titleColumn;
-
     @FXML
     private Label titleLabel;
     @FXML
@@ -26,7 +28,7 @@ public class TaskManagerController {
 
     private App app;
     private static final SimpleDateFormat DATE_FORMAT =
-            new SimpleDateFormat("yyyy-MM-dd");
+            new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
 
     public TaskManagerController() {
 
@@ -67,7 +69,7 @@ public class TaskManagerController {
                 timeLabel.setText("");
                 startTimeLabel.setText(DATE_FORMAT.format(task.getStartTime()));
                 endTimeLabel.setText(DATE_FORMAT.format(task.getEndTime()));
-                repeatIntervalLabel.setText(Integer.toString(task.getRepeatInterval()));
+                repeatIntervalLabel.setText(Integer.toString(task.getRepeatInterval()/1000));
             }
         } else {
             // if Task is null remove all the text
@@ -122,11 +124,17 @@ public class TaskManagerController {
         }
     }
 
+    /**
+     * Opens Calendar window
+     */
     @FXML
     private void openCalendar() {
         app.showCalendarWindow();
     }
 
+    /**
+     * Shows Alert window
+     */
     private void showAlert() {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.initOwner(app.getPrimaryStage());

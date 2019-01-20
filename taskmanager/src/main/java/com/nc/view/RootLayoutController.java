@@ -7,6 +7,9 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 
+/**
+ * RootLayoutController class
+ */
 public class RootLayoutController {
     private App app;
 
@@ -71,7 +74,6 @@ public class RootLayoutController {
         alert.setTitle("Task Manager");
         alert.setHeaderText("About");
         alert.setContentText("Task Manager application");
-
         alert.showAndWait();
     }
 

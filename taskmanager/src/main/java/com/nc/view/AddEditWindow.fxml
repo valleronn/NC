@@ -24,10 +24,10 @@
             <Label text="Time" GridPane.rowIndex="1" />
             <Label text="Start Time" GridPane.rowIndex="2" />
             <Label text="End Time" GridPane.rowIndex="3" />
-            <Label text="Repeat Interval" GridPane.rowIndex="4" />
-            <TextField fx:id="timeField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="startTimeField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="endTimeField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label text="Repeat Interval (s)" GridPane.rowIndex="4" />
+            <TextField fx:id="timeField" promptText="yyyy-MM-dd-HH:mm:ss" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="startTimeField" promptText="yyyy-MM-dd-HH:mm:ss" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="endTimeField" promptText="yyyy-MM-dd-HH:mm:ss" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="repeatIntervalField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <CheckBox fx:id="isRepeatableCheckBox" mnemonicParsing="false" text="Repeatable" GridPane.rowIndex="5" />
         </children>

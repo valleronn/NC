@@ -167,6 +167,13 @@ public class Task implements Comparable<Task>, Cloneable, Serializable {
     }
 
     /**
+     * Makes the task repeatable
+     */
+    public void setRepeated(boolean repeated) {
+        this.repeated = repeated;
+    }
+
+    /**
      * RepeatInterval getter
      * @return time
      */

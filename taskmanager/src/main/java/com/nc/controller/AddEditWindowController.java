@@ -9,9 +9,11 @@ import javafx.stage.Stage;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+/**
+ * AddEditWindowController class
+ */
 public class AddEditWindowController {
     private Task task;
-
     @FXML
     private TextField titleField;
     @FXML
@@ -26,10 +28,9 @@ public class AddEditWindowController {
     private CheckBox isRepeatableCheckBox;
 
     private static final SimpleDateFormat DATE_FORMAT =
-            new SimpleDateFormat("yyyy-MM-dd");
+            new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
     private Stage dialogStage;
     private boolean saveClicked = false;
-
 
     @FXML
     private void initialize() {
@@ -44,15 +45,16 @@ public class AddEditWindowController {
         isRepeatableCheckBox.selectedProperty().addListener((o, wasSelected, isNowSelected) -> {
             if (isNowSelected) {
                 timeField.setVisible(false);
-
                 startTimeField.setVisible(true);
                 endTimeField.setVisible(true);
                 repeatIntervalField.setVisible(true);
+                task.setRepeated(true);
             } else {
                 timeField.setVisible(true);
                 startTimeField.setVisible(false);
                 endTimeField.setVisible(false);
                 repeatIntervalField.setVisible(false);
+                task.setRepeated(false);
             }
         });
     }
@@ -73,11 +75,13 @@ public class AddEditWindowController {
             titleField.setText(task.getTitle());
             if (!task.isRepeated()) {
                 timeField.setText(DATE_FORMAT.format(task.getTime()));
-                timeField.setPromptText("yyyy-MM-dd");
+                timeField.setPromptText("yyyy-MM-dd-HH:mm:ss");
             } else {
                 isRepeatableCheckBox.setSelected(true);
                 startTimeField.setText(DATE_FORMAT.format(task.getStartTime()));
+                startTimeField.setPromptText("yyyy-MM-dd-HH:mm:ss");
                 endTimeField.setText(DATE_FORMAT.format(task.getEndTime()));
+                endTimeField.setPromptText("yyyy-MM-dd-HH:mm:ss");
                 repeatIntervalField.setText(Integer.toString(task.getRepeatInterval()));
             }
         }
@@ -104,9 +108,8 @@ public class AddEditWindowController {
             } else {
                 task.setTime(DATE_FORMAT.parse(startTimeField.getText()),
                         DATE_FORMAT.parse(endTimeField.getText()),
-                        Integer.parseInt(repeatIntervalField.getText()));
+                        Integer.parseInt(repeatIntervalField.getText())*1000);
             }
-
             saveClicked = true;
             dialogStage.close();
         //}
@@ -119,13 +122,4 @@ public class AddEditWindowController {
     private void cancel() {
         dialogStage.close();
     }
-
-    /**
-     * Validation check.
-     *
-     * @return true if input is correct
-     */
-    /*private boolean isInputValid() {
-
-    }*/
 }

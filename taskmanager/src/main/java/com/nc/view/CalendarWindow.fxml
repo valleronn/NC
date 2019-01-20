@@ -21,8 +21,8 @@
                 <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <DatePicker GridPane.columnIndex="1" />
-                  <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <DatePicker fx:id="startDatePicker" GridPane.columnIndex="1" />
+                  <DatePicker fx:id="endDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label text="Start Date" />
                   <Label text="End Date" GridPane.rowIndex="1" />
                </children>
@@ -35,12 +35,16 @@
                   <Insets bottom="10.0" top="10.0" />
                </VBox.margin>
             </Button>
-            <TableView fx:id="calendarTaskTable" prefHeight="200.0" prefWidth="200.0">
-              <columns>
-                <TableColumn fx:id="dateColumn" prefWidth="130.0" text="Date" />
-                <TableColumn fx:id="titleColumn" prefWidth="249.0" text="Task" />
-              </columns>
-            </TableView>
+            <HBox prefHeight="246.0" prefWidth="380.0">
+               <children>
+                  <ListView fx:id="dateList" prefHeight="246.0" prefWidth="235.0" />
+                  <TableView fx:id="calendarTaskTable" prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn fx:id="titleColumn" prefWidth="185.0" text="Task Title" />
+                    </columns>
+                  </TableView>
+               </children>
+            </HBox>
          </children>
       </VBox>
    </children>
