@@ -17,18 +17,15 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
-
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Main class
  */
 public class App extends Application {
-    final static Logger logger = Logger.getLogger(App.class);
+    static final Logger logger = Logger.getLogger(App.class);
+    private static final String FXML_PATH = "/com/nc/view/";
     private BorderPane rootLayout;
     private Stage primaryStage;
     private ObservableList<Task> taskData = FXCollections.observableArrayList();
@@ -64,7 +61,7 @@ public class App extends Application {
         logger.info("Initializing root layout");
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(App.class.getResource("../view/RootLayout.fxml"));
+            loader.setLocation(App.class.getResource(FXML_PATH + "RootLayout.fxml"));
             rootLayout = (BorderPane) loader.load();
             primaryStage.getIcons().add(new Image("/icon.png"));
             Scene scene = new Scene(rootLayout);
@@ -85,7 +82,7 @@ public class App extends Application {
         logger.info("Initializing task manager window");
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(App.class.getResource("../view/TaskManagerWindow.fxml"));
+            loader.setLocation(App.class.getResource(FXML_PATH + "TaskManagerWindow.fxml"));
             AnchorPane taskManagerWindow = (AnchorPane) loader.load();
             rootLayout.setCenter(taskManagerWindow);
             TaskManagerController controller = loader.getController();
@@ -103,7 +100,7 @@ public class App extends Application {
         logger.info("Initializing Add/Edit window");
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(App.class.getResource("../view/AddEditWindow.fxml"));
+            loader.setLocation(App.class.getResource(FXML_PATH + "AddEditWindow.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
 
             Stage dialogStage = new Stage();
@@ -135,7 +132,7 @@ public class App extends Application {
         logger.info("Initializing Calendar window");
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(App.class.getResource("../view/CalendarWindow.fxml"));
+            loader.setLocation(App.class.getResource(FXML_PATH + "CalendarWindow.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
 
             Stage dialogStage = new Stage();

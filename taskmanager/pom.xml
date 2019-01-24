@@ -45,6 +45,9 @@
           <include>**/*.fxml</include>
         </includes>
       </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
     </resources>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
@@ -75,6 +78,13 @@
                 <mainClass>com.nc.controller.App</mainClass>
               </manifest>
             </archive>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>3.0.0</version>
+          <configuration>
+            <descriptorRefs>jar-with-dependencies</descriptorRefs>
           </configuration>
         </plugin>
         <plugin>
