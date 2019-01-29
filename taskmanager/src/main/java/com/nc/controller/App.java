@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 import java.io.File;
 import java.io.IOException;
+import java.util.prefs.Preferences;
 
 /**
  * Main class
@@ -72,6 +73,10 @@ public class App extends Application {
         } catch (IOException e) {
             e.printStackTrace();
             logger.error("Failed to initialize root layout");
+        }
+        File file = getFilePath();
+        if (file != null) {
+            loadTaskDataFromFile(file);
         }
     }
 
@@ -165,7 +170,7 @@ public class App extends Application {
                 list.add(task);
             }
             TaskIO.writeBinary(list, file);
-
+            setFilePath(file);
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -186,6 +191,37 @@ public class App extends Application {
         TaskIO.readBinary(list, file);
         for (int i = 0; i < list.size(); i++) {
             taskData.add(list.getTask(i));
+        }
+        setFilePath(file);
+    }
+
+    /**
+     * Returns last opened file or null if the preference was not found
+     * @return
+     */
+    public File getFilePath() {
+        Preferences prefs = Preferences.userNodeForPackage(App.class);
+        String filePath = prefs.get("filePath", null);
+        if (filePath != null) {
+            return new File(filePath);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Specifies the path for the current loaded file in
+     * the registry
+     * @param file - file or null to remove the path
+     */
+    public void setFilePath(File file) {
+        Preferences prefs = Preferences.userNodeForPackage(App.class);
+        if (file != null) {
+            prefs.put("filePath", file.getPath());
+            primaryStage.setTitle("Task manager - " + file.getName());
+        } else {
+            prefs.remove("filePath");
+            primaryStage.setTitle("Task manager");
         }
     }
 
