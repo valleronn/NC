@@ -7,6 +7,9 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * RootLayoutController class
@@ -23,6 +26,7 @@ public class RootLayoutController {
      */
     @FXML
     private void handleNew() {
+        autoSave(null, false);
         app.getTaskData().clear();
         app.setFilePath(null);
     }
@@ -56,11 +60,27 @@ public class RootLayoutController {
      */
     @FXML
     private void save() {
-        File personFile = app.getFilePath();
-        if (personFile != null) {
-            app.saveTaskDataToFile(personFile);
+        File file = app.getFilePath();
+        if (file != null) {
+            app.saveTaskDataToFile(file);
+            autoSave(file, true);
         } else {
             saveAs();
+        }
+    }
+
+    /**
+     * Autosaves data to a file
+     * @param file file for saving data
+     * @param working true or false to start/stop saving
+     */
+    public void autoSave(File file, boolean working) {
+        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+        if (working) {
+            executorService.scheduleWithFixedDelay(
+                    () -> app.saveTaskDataToFile(file), 1, 1, TimeUnit.MINUTES);
+        } else {
+            executorService.shutdownNow();
         }
     }
 
@@ -87,6 +107,7 @@ public class RootLayoutController {
                 file = new File(file.getPath() + ".dat");
             }
             app.saveTaskDataToFile(file);
+            autoSave(file, true);
         }
     }
 

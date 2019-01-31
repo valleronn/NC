@@ -49,6 +49,7 @@ public class App extends Application {
         initTaskManagerWindow();
         initNotifications();
 
+        primaryStage.setOnCloseRequest(event -> System.exit(0));
     }
 
     public static void main(String[] args) {
