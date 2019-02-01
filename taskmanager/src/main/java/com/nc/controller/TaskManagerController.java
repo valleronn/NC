@@ -4,6 +4,7 @@ import com.nc.model.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.text.SimpleDateFormat;
+import java.util.Optional;
 
 /**
  * TaskManagerController class
@@ -28,7 +29,7 @@ public class TaskManagerController {
 
     private App app;
     private static final SimpleDateFormat DATE_FORMAT =
-            new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
+            new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
     public TaskManagerController() {
 
@@ -56,6 +57,11 @@ public class TaskManagerController {
      * @param task task parameter or null.
      */
     private void showTaskDetails(Task task) {
+        //refreshes table to display task title correctly
+        //after renaming
+        taskTable.getColumns().get(0).setVisible(false);
+        taskTable.getColumns().get(0).setVisible(true);
+
         if (task != null) {
             //fill all the labels with task data
             titleLabel.setText(task.getTitle());
@@ -88,8 +94,11 @@ public class TaskManagerController {
     @FXML
     private void deleteTask() {
         int selectedIndex = taskTable.getSelectionModel().getSelectedIndex();
+        Task task = taskTable.getSelectionModel().getSelectedItem();
         if (selectedIndex >= 0) {
-            taskTable.getItems().remove(selectedIndex);
+            if (showRemoveAlert(task)) {
+                taskTable.getItems().remove(selectedIndex);
+            }
         } else {
             showAlert();
         }
@@ -142,5 +151,20 @@ public class TaskManagerController {
         alert.setHeaderText("No Task Selected");
         alert.setContentText("Please select a task in the list.");
         alert.showAndWait();
+    }
+
+    private boolean showRemoveAlert(Task task) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initOwner(app.getPrimaryStage());
+        alert.setTitle("Removing " + task.getTitle());
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you want to remove "
+                + task.getTitle() + "?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            return true;
+        } else {
+            return false;
+        }
     }
 }

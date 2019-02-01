@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * AddEditWindowController class
@@ -28,13 +29,14 @@ public class AddEditWindowController {
     private CheckBox isRepeatableCheckBox;
 
     private static final SimpleDateFormat DATE_FORMAT =
-            new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
+            new SimpleDateFormat("yyyy-MM-dd HH:mm");
     private Stage dialogStage;
     private boolean saveClicked = false;
 
     @FXML
     private void initialize() {
         timeField.setVisible(true);
+        timeField.setText(DATE_FORMAT.format(new Date()));
         startTimeField.setVisible(false);
         endTimeField.setVisible(false);
         repeatIntervalField.setVisible(false);
@@ -46,11 +48,14 @@ public class AddEditWindowController {
             if (isNowSelected) {
                 timeField.setVisible(false);
                 startTimeField.setVisible(true);
+                startTimeField.setText(DATE_FORMAT.format(new Date()));
                 endTimeField.setVisible(true);
+                endTimeField.setText(DATE_FORMAT.format(new Date()));
                 repeatIntervalField.setVisible(true);
                 task.setRepeated(true);
             } else {
                 timeField.setVisible(true);
+                timeField.setText(DATE_FORMAT.format(new Date()));
                 startTimeField.setVisible(false);
                 endTimeField.setVisible(false);
                 repeatIntervalField.setVisible(false);
@@ -75,14 +80,14 @@ public class AddEditWindowController {
             titleField.setText(task.getTitle());
             if (!task.isRepeated()) {
                 timeField.setText(DATE_FORMAT.format(task.getTime()));
-                timeField.setPromptText("yyyy-MM-dd-HH:mm:ss");
+                timeField.setPromptText("yyyy-MM-dd HH:mm");
             } else {
                 isRepeatableCheckBox.setSelected(true);
                 startTimeField.setText(DATE_FORMAT.format(task.getStartTime()));
-                startTimeField.setPromptText("yyyy-MM-dd-HH:mm:ss");
+                startTimeField.setPromptText("yyyy-MM-dd HH:mm");
                 endTimeField.setText(DATE_FORMAT.format(task.getEndTime()));
-                endTimeField.setPromptText("yyyy-MM-dd-HH:mm:ss");
-                repeatIntervalField.setText(Integer.toString(task.getRepeatInterval()));
+                endTimeField.setPromptText("yyyy-MM-dd HH:mm");
+                repeatIntervalField.setText(Integer.toString(task.getRepeatInterval()/1000));
             }
         }
     }
