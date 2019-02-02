@@ -6,6 +6,9 @@ import org.controlsfx.control.Notifications;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * NotificationsController class
@@ -14,7 +17,7 @@ public class NotificationsController {
     private static final SimpleDateFormat DATE_FORMAT =
             new SimpleDateFormat("yyyy-MM-dd HH:mm");
     private App app;
-    Set tasksSet;
+    private Set tasksSet;
 
     public NotificationsController(App app) {
         this.app = app;
@@ -26,47 +29,56 @@ public class NotificationsController {
      */
     public void showNotifications() {
         Thread thread = new Thread(new Runnable() {
-            private void postMessage(final String message) {
+            private void postMessage(final String message, Task task) {
                 Platform.runLater(() -> {
-                        for (Task task : app.getTaskData()) {
-                            if (task != null) {
-                                if (!task.isRepeated()
-                                        && DATE_FORMAT.format(task.getTime()).equals(DATE_FORMAT.format(new Date()))
-                                        && !tasksSet.contains(task)) {
-                                    Notifications.create().title(task.getTitle()).text(message).show();
-                                    tasksSet.add(task);
-                                } else if (task.isRepeated() && !tasksSet.contains(task)) {
-                                    int interval = 0;
-                                    long currTime = new Date().getTime();
-                                    long startTime = task.getStartTime().getTime();
-                                    long endTime = task.getEndTime().getTime();
-                                    long timeToShow = startTime;
-                                    while (currTime <= endTime) {
-                                        System.out.println(currTime);
-                                        if (DATE_FORMAT.format(timeToShow).equals(DATE_FORMAT.format(currTime))) {
-                                            System.out.println("Show notification");
-                                            Notifications.create().title(task.getTitle()).text(message).show();
-                                            interval = interval + task.getRepeatInterval();
-                                            timeToShow = startTime + interval;
-                                        }
-                                        currTime = new Date().getTime();
-                                    }
-                                    //tasksSet.add(task);
-                                }
-                            }
-                        }
-                    });
+                    System.out.println(new Date() + " Showing notification");
+                    Notifications.create().title(task.getTitle()).text(message).show();
+                });
             }
 
             @Override
             public void run() {
                 try {
+                    final Map<Task, ScheduledExecutorService> taskExecuterMap = new HashMap<>();
                     while(true) {
-                        postMessage("Is on your queue");
-                        Thread.sleep(600);
+                        for (Task task : app.getTaskData()) {
+                            if (task.isActive()) {
+                                checkCreateExecuter(taskExecuterMap, task);
+                                if (!task.isRepeated()
+                                        && DATE_FORMAT.format(task.getTime()).equals(DATE_FORMAT.format(new Date()))
+                                        && !tasksSet.contains(task)) {
+                                    postMessage("Is on your queue", task);
+                                    tasksSet.add(task);
+                                } else if (task.isRepeated()) {
+                                    long currTime = new Date().getTime();
+                                    long startTime = task.getStartTime().getTime();
+                                    long endTime = task.getEndTime().getTime();
+                                    if (endTime >= currTime) {
+                                        if (DATE_FORMAT.format(startTime).equals(DATE_FORMAT.format(currTime))) {
+                                            taskExecuterMap.get(task).scheduleWithFixedDelay(
+                                                    () -> postMessage("Is on your queue", task),
+                                                    0, task.getRepeatInterval(), TimeUnit.MILLISECONDS);
+                                        }
+                                    } else {
+                                        System.out.println("Shutting down the executer " + task.getTitle());
+                                        taskExecuterMap.get(task).shutdownNow();
+                                        taskExecuterMap.remove(task);
+                                        task.setActive(false);
+                                    }
+                                }
+                            }
+                        }
+                        Thread.sleep(60000);
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                }
+            }
+
+            private void checkCreateExecuter(Map<Task, ScheduledExecutorService> taskExecuterMap, Task task) {
+                if (!taskExecuterMap.containsKey(task)) {
+                    ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+                    taskExecuterMap.put(task, executorService);
                 }
             }
 
