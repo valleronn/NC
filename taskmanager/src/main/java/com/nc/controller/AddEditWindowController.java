@@ -2,6 +2,7 @@ package com.nc.controller;
 
 import com.nc.model.*;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -106,7 +107,7 @@ public class AddEditWindowController {
      */
     @FXML
     private void saveTask() throws ParseException {
-        //if (isInputValid()) {
+        if (isInputValid()) {
             task.setTitle(titleField.getText());
             if (!task.isRepeated()) {
                 task.setTime(DATE_FORMAT.parse(timeField.getText()));
@@ -117,7 +118,64 @@ public class AddEditWindowController {
             }
             saveClicked = true;
             dialogStage.close();
-        //}
+        }
+    }
+
+    /**
+     * Checks user's input
+     * @return true if valid, otherwise false
+     */
+    private boolean isInputValid() {
+        boolean result = true;
+        if (titleField.getText().equals("")) {
+            titleField.setPromptText("Title can't be empty");
+            result = false;
+        }
+        if (!isRepeatableCheckBox.isSelected()) {
+            try {
+                DATE_FORMAT.parse(timeField.getText());
+            } catch (ParseException e) {
+                timeField.setText(DATE_FORMAT.format(new Date()));
+                showWrongDateAlert();
+                result = false;
+            }
+        } else {
+            try {
+                DATE_FORMAT.parse(startTimeField.getText());
+                DATE_FORMAT.parse(endTimeField.getText());
+            } catch (ParseException e) {
+                startTimeField.setText(DATE_FORMAT.format(new Date()));
+                endTimeField.setText(DATE_FORMAT.format(new Date()));
+                showWrongDateAlert();
+                result = false;
+            }
+            String wrongInterval = "Repeat interval must be in seconds";
+            if (repeatIntervalField.getText() == null
+                    || repeatIntervalField.getText().length() == 0) {
+                repeatIntervalField.setPromptText(wrongInterval);
+                result = false;
+            } else {
+                try {
+                    Integer.parseInt(repeatIntervalField.getText());
+                } catch (NumberFormatException e) {
+                    repeatIntervalField.setText("");
+                    repeatIntervalField.setPromptText(wrongInterval);
+                    result = false;
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Shows an alert when entered date is wrong
+     */
+    private void showWrongDateAlert() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Wrong Date format");
+        alert.setHeaderText(null);
+        alert.setContentText("Correct pattern is: yyyy-MM-dd HH:mm");
+        alert.showAndWait();
     }
 
     /**
