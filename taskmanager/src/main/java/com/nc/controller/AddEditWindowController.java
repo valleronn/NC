@@ -88,7 +88,7 @@ public class AddEditWindowController {
                 startTimeField.setPromptText("yyyy-MM-dd HH:mm");
                 endTimeField.setText(DATE_FORMAT.format(task.getEndTime()));
                 endTimeField.setPromptText("yyyy-MM-dd HH:mm");
-                repeatIntervalField.setText(Integer.toString(task.getRepeatInterval()/1000));
+                repeatIntervalField.setText(Integer.toString(task.getRepeatInterval()/60000));
             }
         }
     }
@@ -114,7 +114,7 @@ public class AddEditWindowController {
             } else {
                 task.setTime(DATE_FORMAT.parse(startTimeField.getText()),
                         DATE_FORMAT.parse(endTimeField.getText()),
-                        Integer.parseInt(repeatIntervalField.getText())*1000);
+                        Integer.parseInt(repeatIntervalField.getText())*60000);
             }
             saveClicked = true;
             dialogStage.close();
@@ -149,7 +149,7 @@ public class AddEditWindowController {
                 showWrongDateAlert();
                 result = false;
             }
-            String wrongInterval = "Repeat interval must be in seconds";
+            String wrongInterval = "Repeat interval must be in minutes";
             if (repeatIntervalField.getText() == null
                     || repeatIntervalField.getText().length() == 0) {
                 repeatIntervalField.setPromptText(wrongInterval);

@@ -75,7 +75,7 @@ public class TaskManagerController {
                 timeLabel.setText("");
                 startTimeLabel.setText(DATE_FORMAT.format(task.getStartTime()));
                 endTimeLabel.setText(DATE_FORMAT.format(task.getEndTime()));
-                repeatIntervalLabel.setText(Integer.toString(task.getRepeatInterval()/1000));
+                repeatIntervalLabel.setText(Integer.toString(task.getRepeatInterval()/60000));
             }
         } else {
             // if Task is null remove all the text
