@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Objects;
 
-/** LinkedTaskList implementation
-*
+/**
+* LinkedTaskList implementation
 */
 public class LinkedTaskList extends TaskList {
     private Node head;
@@ -56,6 +56,11 @@ public class LinkedTaskList extends TaskList {
         return false;
     }
 
+    /**
+     * Removes a task by index
+     * @param index parameter
+     * @return true or false
+     */
     public boolean remove(int index) {
         Node curr = head;
         Node prev = null;
@@ -109,7 +114,6 @@ public class LinkedTaskList extends TaskList {
             }
             return curr.getTask();
         }
-        if (task != null)
             task = curr.getTask();
         return task;
 
@@ -177,6 +181,9 @@ public class LinkedTaskList extends TaskList {
         };
     }
 
+    /**
+     * Represents Node class
+     */
     private class Node {
         Node next;
         Task task;

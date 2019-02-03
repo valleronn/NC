@@ -71,6 +71,10 @@ public class Task implements Comparable<Task>, Cloneable, Serializable {
         return title;
     }
 
+    /**
+     * Returns title in StringProperty format
+     * @return titleProperty
+     */
     public StringProperty getTitleProperty() {
         StringProperty titleProperty = new SimpleStringProperty(getTitle());
         return titleProperty;
@@ -112,11 +116,6 @@ public class Task implements Comparable<Task>, Cloneable, Serializable {
             time = this.time;
         }
         return time;
-    }
-
-    public StringProperty getTimeProperty() {
-        StringProperty timeProperty = new SimpleStringProperty(getTime().toString());
-        return timeProperty;
     }
 
     /**

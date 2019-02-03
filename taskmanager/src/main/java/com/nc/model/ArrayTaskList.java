@@ -73,6 +73,11 @@ public class ArrayTaskList extends TaskList {
         return result;
     }
 
+    /**
+     * Removes a task by index
+     * @param index index number
+     * @return true or false
+     */
     public boolean remove(int index) {
         boolean result = false;
         for (int i = 0; i < tasks.length; i++) {
@@ -85,6 +90,10 @@ public class ArrayTaskList extends TaskList {
         return result;
     }
 
+    /**
+     * Trims task array
+     * @param i parameter
+     */
     public void trim(int i) {
         Task[] newTasks = new Task[capacity];
         if (i == 0) { // first element must be deleted

@@ -75,6 +75,11 @@ public class NotificationsController {
                 }
             }
 
+            /**
+             * Checks if map contains a task and if true creates ScheduledExecutorService
+             * @param taskExecuterMap taskExecuterMap parameter
+             * @param task task parameter
+             */
             private void checkCreateExecuter(Map<Task, ScheduledExecutorService> taskExecuterMap, Task task) {
                 if (!taskExecuterMap.containsKey(task)) {
                     ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();

@@ -153,6 +153,11 @@ public class TaskManagerController {
         alert.showAndWait();
     }
 
+    /**
+     * Shows remove Alert window
+     * @param task task that could be removed
+     * @return true or false
+     */
     private boolean showRemoveAlert(Task task) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initOwner(app.getPrimaryStage());

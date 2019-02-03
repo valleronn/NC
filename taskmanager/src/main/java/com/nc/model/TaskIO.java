@@ -44,7 +44,7 @@ public class TaskIO {
                 dataOutputStream.close();
             }
         } catch (IOException e) {
-            System.out.println("Input/Output exception");;
+            System.out.println("Input/Output exception");
         }
     }
 
@@ -205,6 +205,11 @@ public class TaskIO {
         }
     }
 
+    /**
+     * Writes tasks to a text file
+     * @param tasks to write
+     * @param file to write into
+     */
     public static void writeText(TaskList tasks, File file) {
         try {
             FileWriter fileWriter = new FileWriter(file);
@@ -218,6 +223,12 @@ public class TaskIO {
         }
     }
 
+    /**
+     * Reads tasks from a text file
+     * @param tasks to read
+     * @param file to read from
+     * @throws IOException
+     */
     public static void readText(TaskList tasks, File file) throws IOException {
         FileReader fileReader = new FileReader(file);
         read(tasks, fileReader);

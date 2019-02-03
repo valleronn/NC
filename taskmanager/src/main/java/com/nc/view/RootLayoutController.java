@@ -22,7 +22,7 @@ public class RootLayoutController {
     }
 
     /**
-     * Creates empty Task Manager.
+     * Removes all tasks.
      */
     @FXML
     private void handleNew() {

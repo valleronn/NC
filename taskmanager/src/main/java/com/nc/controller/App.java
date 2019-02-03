@@ -40,7 +40,7 @@ public class App extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage primaryStage) {
         logger.info("Starting the application");
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Task Manager");
@@ -73,7 +73,7 @@ public class App extends Application {
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            logger.error("Failed to initialize root layout");
+            logger.error("Failed to initialize root layout", e);
         }
         File file = getFilePath();
         if (file != null) {
@@ -95,7 +95,7 @@ public class App extends Application {
             controller.setApp(this);
         } catch (IOException e) {
             e.printStackTrace();
-            logger.error("Failed to initialize task manager window");
+            logger.error("Failed to initialize task manager window", e);
         }
     }
 
@@ -126,7 +126,7 @@ public class App extends Application {
             return controller.isSaveClicked();
         } catch (IOException e) {
             e.printStackTrace();
-            logger.error("Failed to initialize Add/Edit window");
+            logger.error("Failed to initialize Add/Edit window", e);
             return false;
         }
     }
@@ -155,7 +155,7 @@ public class App extends Application {
             dialogStage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
-            logger.error("Failed to initialize Calendar window");
+            logger.error("Failed to initialize Calendar window", e);
         }
     }
 

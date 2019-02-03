@@ -34,6 +34,10 @@ public class AddEditWindowController {
     private Stage dialogStage;
     private boolean saveClicked = false;
 
+    /**
+     * Specifies default values
+     * during initialization
+     */
     @FXML
     private void initialize() {
         timeField.setVisible(true);
@@ -41,10 +45,13 @@ public class AddEditWindowController {
         startTimeField.setVisible(false);
         endTimeField.setVisible(false);
         repeatIntervalField.setVisible(false);
-        addEditListener();
+        repeatableCheckBoxListener();
     }
 
-    public void addEditListener() {
+    /**
+     * Changes visibility of fields upon checkbox clicking
+     */
+    public void repeatableCheckBoxListener() {
         isRepeatableCheckBox.selectedProperty().addListener((o, wasSelected, isNowSelected) -> {
             if (isNowSelected) {
                 timeField.setVisible(false);
@@ -71,8 +78,7 @@ public class AddEditWindowController {
 
     /**
      * Sets task info that will be changed.
-     *
-     * @param task
+     * @param task task to set
      */
     public void setTask(Task task) {
         this.task = task;
