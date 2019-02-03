@@ -9,7 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Map;
 import java.util.Set;
@@ -37,6 +37,10 @@ public class CalendarWindowController {
         this.app = app;
     }
 
+    /**
+     * Initializes DatePickers values
+     * and listens for date selection to display proper task
+     */
     @FXML
     public void initialize() {
         titleColumn.setCellValueFactory(
@@ -44,6 +48,8 @@ public class CalendarWindowController {
         dateList.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldDate, newDate) -> showTasksByDate(newDate)
         );
+        startDatePicker.setValue(LocalDate.now());
+        endDatePicker.setValue(LocalDate.now());
     }
 
     public void setDialogStage(Stage dialogStage) {
@@ -67,6 +73,9 @@ public class CalendarWindowController {
         setCalendar();
     }
 
+    /**
+     * Sets the calendar with required dates
+     */
     public void setCalendar() {
         TaskList list = new ArrayTaskList();
         for (Task task: app.getTaskData()) {
@@ -74,7 +83,9 @@ public class CalendarWindowController {
         }
         Date startDate = java.sql.Date.valueOf(startDatePicker.getValue());
         Date endDate = java.sql.Date.valueOf(endDatePicker.getValue());
-        taskMap = Tasks.calendar(list, startDate, endDate);
+        int dayInMSec = 86399000; //24 hours in milliseconds
+        Date fullEndDate = new Date(endDate.getTime() + dayInMSec);
+        taskMap = Tasks.calendar(list, startDate, fullEndDate);
         ObservableList<Date> taskDates = FXCollections.observableArrayList(taskMap.keySet());
         dateList.setItems(taskDates);
     }
